@@ -113,7 +113,7 @@ export const theme = {
         width: 0,
         height: 0,
       },
-      shadowOpacity: 0.6,
+      shadowOpacity: 0.2,
       shadowRadius: 5,
     },
   ],
