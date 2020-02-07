@@ -19,6 +19,8 @@ This is the repos of the podcast app we build in live stream using React-Native
 
 - Car play
 - Able to sync between device
+- Social login
+- Onboarding flow
 
 ## Apple podcast
 
