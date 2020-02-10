@@ -1,11 +1,15 @@
 import React from 'react';
 import { Box, Text } from 'react-native-design-utility';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { IPodcast } from '../../types/Podcast';
 import { ActivityIndicator, Image, ScrollView } from 'react-native';
-import { feedUrlServices } from '../../services/FeedUrlServices';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Feed } from 'react-native-rss-parser';
+
+import { IPodcast } from '../../types/Podcast';
+import { feedUrlServices } from '../../services/FeedUrlServices';
 import { theme } from '../../constants/theme';
+import useStatusBar from '../hooks/useStatusBar';
 
 type PodcastScreenRouteProp = RouteProp<
   { Podcast: { podcast: IPodcast } },
@@ -13,6 +17,7 @@ type PodcastScreenRouteProp = RouteProp<
 >;
 
 const PodcastScreen: React.FC = () => {
+  useStatusBar('dark-content');
   const { params } = useRoute<PodcastScreenRouteProp>();
   const [feed, setFeed] = React.useState<Feed | null>(null);
 
@@ -32,8 +37,6 @@ const PodcastScreen: React.FC = () => {
 
   return (
     <Box f={1} bg="white">
-
-
       <Box>
         <ScrollView>
           <Box dir="row" pr="sm" mb="sm">
@@ -50,18 +53,34 @@ const PodcastScreen: React.FC = () => {
           <Box px="sm">
             <Text>{feed?.description}</Text>
           </Box>
-          {feed?.items.map(item => (
+          {feed?.items.map((item, i) => (
             <Box key={item.id}>
-              {console.log('link', item.links)}
-              <Box dir="row">
-                <Box h={75} w={75} mr="xs">
-                  <Image source={{ uri: item.itunes.image }} style={{ flex: 1 }} />
+              {console.log('item', item.published)}
+              <Box px="sm" py="sm" dir="row" align="center" justify="between">
+                <Box f={1}>
+                  <Text numberOfLines={1} weight="bold" size="sm">
+                    {item.title}
+                  </Text>
+                  <Box dir="row">
+                    <Text color="greyLight" size="xs" weight="bold" mr="sm">
+                      {formatDistanceToNow(new Date(item.published), {
+                        addSuffix: true,
+                      })}
+                    </Text>
+                    <Text color="greyLight" size="xs">
+                      {item.itunes.duration}
+                    </Text>
+                  </Box>
                 </Box>
-              <Box>
-                <Text>{item.title}</Text>
+                <Box w={50} align="end">
+                  <FeatherIcon
+                    name="download-cloud"
+                    size={20}
+                    color={theme.color.blueLight}
+                  />
+                </Box>
               </Box>
-              </Box>
-              <Box h={1} w="100%" bg="red" />
+              <Box h={1} w="100%" bg="greyLightest" />
             </Box>
           ))}
         </ScrollView>

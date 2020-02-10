@@ -8,6 +8,8 @@ import { itunesApiServices } from '../../services/ItunesApiServices';
 import { IPodcast } from '../../types/Podcast';
 import { useNavigation } from '@react-navigation/native';
 import { routes } from '../../navigations/routes';
+import Header from '../commons/Header';
+import useStatusBar from '../hooks/useStatusBar';
 
 const Divider = () => <Box h={1} w="100%" bg="greyLightest" />;
 
@@ -37,27 +39,36 @@ const PodcastTile: React.FC<{ podcast: IPodcast }> = ({ podcast }) => {
 };
 
 const PodcastCard: React.FC<{ podcast: IPodcast }> = ({ podcast }) => {
+  const { navigate } = useNavigation();
+
   return (
-    <Box mr="sm" h={102}>
-      <Box
-        w={100}
-        h={100}
-        radius="xs"
-        style={{
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.2,
-          shadowColor: 'black',
-          shadowRadius: 2,
-        }}>
-        <Image
+    <TouchableOpacity onPress={() => navigate(routes.PODCAST, { podcast })}>
+      <Box mr="sm" w={150} h={200}>
+        <Box
+          w={150}
+          h={150}
+          radius="xs"
           style={{
-            flex: 1,
-            borderRadius: theme.radius.xs,
-          }}
-          source={{ uri: podcast.artworkUrl100 }}
-        />
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.2,
+            shadowColor: 'black',
+            shadowRadius: 2,
+          }}>
+          <Image
+            style={{
+              flex: 1,
+              borderRadius: theme.radius.xs,
+            }}
+            source={{ uri: podcast.artworkUrl600 }}
+          />
+        </Box>
+        <Box f={1} mt="xs">
+          <Text size="sm" weight="bold" numberOfLines={1}>
+            {podcast.artistName}
+          </Text>
+        </Box>
       </Box>
-    </Box>
+    </TouchableOpacity>
   );
 };
 
@@ -80,6 +91,8 @@ const Category: React.FC<{ color: string; icon: string }> = ({
 };
 
 const HomeScreen: React.FC = () => {
+  useStatusBar('light-content');
+
   const [podcasts, setPodcasts] = React.useState<IPodcast[]>([]);
 
   React.useEffect(() => {
@@ -90,10 +103,17 @@ const HomeScreen: React.FC = () => {
 
   return (
     <Box f={1} bg="white">
+      <Header title="Discover" />
       <Box>
-        <ScrollView>
+        <Box px="sm" my="md">
+          <Text weight="bold">Hot Trend</Text>
+        </Box>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ marginLeft: theme.space.sm }}>
           {podcasts.map(podcast => (
-            <PodcastTile podcast={podcast} key={podcast.trackId} />
+            <PodcastCard podcast={podcast} key={podcast.trackId} />
           ))}
         </ScrollView>
       </Box>
