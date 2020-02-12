@@ -5,6 +5,7 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { ActivityIndicator, Image, ScrollView } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Feed } from 'react-native-rss-parser';
+import TrackPlayer from 'react-native-track-player';
 
 import { IPodcast } from '../../types/Podcast';
 import { feedUrlServices } from '../../services/FeedUrlServices';
@@ -55,10 +56,24 @@ const PodcastScreen: React.FC = () => {
           </Box>
           {feed?.items.map((item, i) => (
             <Box key={item.id}>
-              {console.log('item', item.published)}
               <Box px="sm" py="sm" dir="row" align="center" justify="between">
                 <Box f={1}>
-                  <Text numberOfLines={1} weight="bold" size="sm">
+                  <Text numberOfLines={1} weight="bold" size="sm" onPress={async () => {
+                    console.log('item.links', item.links);
+
+                    await TrackPlayer.reset();
+                    // Adds a track to the queue
+                    await TrackPlayer.add({
+                      id: 'trackId',
+                      url: item.links[0].url,
+                      title: 'Track Title',
+                      artist: 'Track Artist',
+                      // artwork: require('track.png')
+                    });
+
+                    // Starts playing it
+                    TrackPlayer.play();
+                  }}>
                     {item.title}
                   </Text>
                   <Box dir="row">

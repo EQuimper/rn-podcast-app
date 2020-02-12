@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Text } from 'react-native-design-utility';
 import { Image, ScrollView, TouchableOpacity } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import TrackPlayer from 'react-native-track-player';
 
 import { theme } from '../../constants/theme';
 import { itunesApiServices } from '../../services/ItunesApiServices';
@@ -15,6 +16,7 @@ const Divider = () => <Box h={1} w="100%" bg="greyLightest" />;
 
 const PodcastTile: React.FC<{ podcast: IPodcast }> = ({ podcast }) => {
   const { navigate } = useNavigation();
+
   return (
     <TouchableOpacity onPress={() => navigate(routes.PODCAST, { podcast })}>
       <Box dir="row" align="center">
@@ -100,6 +102,27 @@ const HomeScreen: React.FC = () => {
       setPodcasts(results);
     });
   }, []);
+
+  React.useEffect(() => {
+    // Creates the player
+    TrackPlayer.setupPlayer().then(async () => {
+      console.log('player is setup')
+
+      // // Adds a track to the queue
+      // await TrackPlayer.add({
+      //   id: 'trackId',
+      //   url: 'https://traffic.libsyn.com/secure/syntax/Syntax222.mp3',
+      //   title: 'Track Title',
+      //   artist: 'Track Artist',
+      //   // artwork: require('track.png')
+      // });
+      //
+      // // Starts playing it
+      // TrackPlayer.play();
+
+    }).catch(e => console.log('error', e));
+  }, [])
+
 
   return (
     <Box f={1} bg="white">
