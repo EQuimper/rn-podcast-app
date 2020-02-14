@@ -16,6 +16,8 @@
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "date-fns": "^2.9.0",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.1.8",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-design-utility": "^1.0.0",
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/babel__core": "^7.1.3",
