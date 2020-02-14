@@ -10,7 +10,8 @@ import { IPodcast } from '../../types/Podcast';
 import { useNavigation } from '@react-navigation/native';
 import { routes } from '../../navigations/routes';
 import Header from '../commons/Header';
-import useStatusBar from '../hooks/useStatusBar';
+import useStatusBar from '../../hooks/useStatusBar';
+import TrackPlayerServices from '../../services/TrackPlayerServices';
 
 const Divider = () => <Box h={1} w="100%" bg="greyLightest" />;
 
@@ -105,24 +106,26 @@ const HomeScreen: React.FC = () => {
 
   React.useEffect(() => {
     // Creates the player
-    TrackPlayer.setupPlayer().then(async () => {
-      console.log('player is setup')
+    TrackPlayer.setupPlayer()
+      .then(async () => {
+        console.log('player is setup');
 
-      // // Adds a track to the queue
-      // await TrackPlayer.add({
-      //   id: 'trackId',
-      //   url: 'https://traffic.libsyn.com/secure/syntax/Syntax222.mp3',
-      //   title: 'Track Title',
-      //   artist: 'Track Artist',
-      //   // artwork: require('track.png')
-      // });
-      //
-      // // Starts playing it
-      // TrackPlayer.play();
+        // // Adds a track to the queue
+        // await TrackPlayer.add({
+        //   id: 'trackId',
+        //   url: 'https://traffic.libsyn.com/secure/syntax/Syntax222.mp3',
+        //   title: 'Track Title',
+        //   artist: 'Track Artist',
+        //   // artwork: require('track.png')
+        // });
+        //
+        // // Starts playing it
+        // TrackPlayer.play();
+      })
+      .catch(e => console.log('error', e));
 
-    }).catch(e => console.log('error', e));
-  }, [])
-
+    TrackPlayer.registerPlaybackService(() => TrackPlayerServices);
+  }, []);
 
   return (
     <Box f={1} bg="white">

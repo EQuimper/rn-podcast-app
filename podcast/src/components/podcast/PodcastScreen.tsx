@@ -10,7 +10,7 @@ import TrackPlayer from 'react-native-track-player';
 import { IPodcast } from '../../types/Podcast';
 import { feedUrlServices } from '../../services/FeedUrlServices';
 import { theme } from '../../constants/theme';
-import useStatusBar from '../hooks/useStatusBar';
+import useStatusBar from '../../hooks/useStatusBar';
 
 type PodcastScreenRouteProp = RouteProp<
   { Podcast: { podcast: IPodcast } },
