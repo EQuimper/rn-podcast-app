@@ -30,7 +30,13 @@ const TabBar: React.FC<BottomTabBarProps> = props => {
   return (
     <>
       <Player />
-      <Box h={50 + insets.bottom} w="100%" bg="white" dir="row">
+      <Box
+        h={50 + insets.bottom}
+        w="100%"
+        bg="white"
+        dir="row"
+        pb="sm"
+        style={{ borderTopWidth: 1, borderTopColor: theme.color.greyLightest }}>
         {props.state.routes.map((route, index) => {
           const icon = ICONS[route.name];
 

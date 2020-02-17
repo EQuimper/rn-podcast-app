@@ -7,9 +7,14 @@ import { observer } from 'mobx-react';
 import { metrics } from '../../constants/metrics';
 import { theme } from '../../constants/theme';
 import { useRootStore } from '../../contexts/RootStoreContext';
+import { Image } from 'react-native';
 
 const Player: React.FC = () => {
   const { playerStore } = useRootStore();
+
+  console.log('playerStore', playerStore)
+
+  if (!playerStore.currentTrack) return null;
 
   return (
     <Box
@@ -20,13 +25,22 @@ const Player: React.FC = () => {
       align="center"
       justify="between"
       px="sm">
-      <Box dir="row" align="center">
-        <Box w={50} h={50} radius={8} bg="white" mr="sm" />
-        <Text color="white" weight="bold">
-          Learn React-Native...
-        </Text>
+      <Box dir="row" align="center" f={1} mr="sm">
+        <Box w={50} h={50} radius={8} bg="white" mr="sm">
+          {playerStore.currentTrack?.artwork && (
+            <Image
+              source={{ uri: playerStore.currentTrack?.artwork }}
+              style={{ flex: 1, borderRadius: 8 }}
+            />
+          )}
+        </Box>
+        <Box f={1}>
+          <Text color="white" weight="bold" numberOfLines={1}>
+            {playerStore.currentTrack?.title}
+          </Text>
+        </Box>
       </Box>
-      <Box dir="row" f={1} align="center" justify="end">
+      <Box dir="row" align="center" justify="end">
         <Box mr="sm">
           {playerStore.isPlaying ? (
             <TouchableOpacity
