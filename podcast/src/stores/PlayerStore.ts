@@ -38,6 +38,16 @@ class PlayerStore {
     );
   }
 
+  @computed
+  public get isPlaying() {
+    return this._playerState === STATE_PLAYING;
+  }
+
+  @computed
+  public get isPaused() {
+    return this._playerState === STATE_PAUSED;
+  }
+
   @action
   public async start(track: ITrack) {
     this.currentTrack = track;
@@ -63,14 +73,10 @@ class PlayerStore {
     await TrackPlayer.pause();
   }
 
-  @computed
-  public get isPlaying() {
-    return this._playerState === STATE_PLAYING;
-  }
-
-  @computed
-  public get isPaused() {
-    return this._playerState === STATE_PAUSED;
+  @action
+  public async seek30() {
+    const position = await TrackPlayer.getPosition();
+    await TrackPlayer.seekTo(position + 30);
   }
 }
 

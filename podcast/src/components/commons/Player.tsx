@@ -12,8 +12,6 @@ import { Image } from 'react-native';
 const Player: React.FC = () => {
   const { playerStore } = useRootStore();
 
-  console.log('playerStore', playerStore)
-
   if (!playerStore.currentTrack) return null;
 
   return (
@@ -57,7 +55,9 @@ const Player: React.FC = () => {
           )}
         </Box>
         <Box>
-          <TouchableOpacity hitSlop={metrics.makeHitSlop(20)}>
+          <TouchableOpacity
+            hitSlop={metrics.makeHitSlop(20)}
+            onPress={playerStore.seek30}>
             <FeatherIcon color={theme.color.white} name="rotate-cw" size={25} />
           </TouchableOpacity>
         </Box>
