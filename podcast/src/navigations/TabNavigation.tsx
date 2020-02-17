@@ -11,6 +11,7 @@ import PodcastScreen from '../components/podcast/PodcastScreen';
 import { IPodcast } from '../types/Podcast';
 import { truncate } from '../helpers/text';
 import TabBar from '../components/commons/TabBar';
+import { theme } from '../constants/theme';
 
 type HomeStackParams = {
   Home: undefined;
@@ -21,10 +22,16 @@ const HomeStack = createStackNavigator<HomeStackParams>();
 
 const HomeNavigation: React.FC = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerBackTitleStyle: { color: theme.color.blueLight },
+      }}>
       <HomeStack.Screen
         name="Home"
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
         component={HomeScreen}
       />
       <HomeStack.Screen

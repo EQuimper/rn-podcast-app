@@ -1,10 +1,11 @@
 import { action, computed, observable, runInAction } from 'mobx';
-import RootStore from './RootStore';
 import TrackPlayer, {
   State as TrackPlayerState,
   STATE_PAUSED,
   STATE_PLAYING,
 } from 'react-native-track-player';
+
+import RootStore from './RootStore';
 
 interface ITrack {
   id: string;
@@ -31,7 +32,6 @@ class PlayerStore {
       'playback-state',
       ({ state }: { state: TrackPlayerState }) => {
         runInAction(() => {
-          console.log('playerState', state);
           this._playerState = state;
         });
       },
@@ -49,7 +49,7 @@ class PlayerStore {
   }
 
   @action
-  public async start(track: ITrack) {
+  public start = async (track: ITrack) => {
     this.currentTrack = track;
     await TrackPlayer.reset();
     await TrackPlayer.add({
@@ -61,23 +61,28 @@ class PlayerStore {
     });
 
     this.play();
-  }
+  };
 
-  @action
-  public async play() {
+  public play = async () => {
     await TrackPlayer.play();
-  }
+  };
 
-  @action
-  public async pause() {
+  public pause = async () => {
     await TrackPlayer.pause();
-  }
+  };
 
-  @action
-  public async seek30() {
+  /**
+   * Take an incrementer and seek to the current position + this incrementer
+   */
+  private seekInc = async (inc: number) => {
     const position = await TrackPlayer.getPosition();
-    await TrackPlayer.seekTo(position + 30);
-  }
+    await TrackPlayer.seekTo(position + inc);
+  };
+
+  public seek30 = async () => {
+    console.log('this', this);
+    await this.seekInc(30);
+  };
 }
 
 export default PlayerStore;

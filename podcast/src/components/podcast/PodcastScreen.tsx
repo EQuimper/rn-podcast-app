@@ -43,19 +43,16 @@ const PodcastScreen: React.FC = () => {
     <Box f={1} bg="white">
       <Box>
         <ScrollView>
-          <Box dir="row" pr="sm" mb="sm">
-            <Box h={100} w={100} mr="xs">
+          <Box dir="row" p="sm" mb="sm">
+            <Box h={100} w={100} mr="sm">
               <Image
                 source={{ uri: params.podcast.artworkUrl100 }}
                 style={{ flex: 1 }}
               />
             </Box>
             <Box f={1}>
-              <Text numberOfLines={1}>{params.podcast.trackName}</Text>
+              <Text size="sm" color="greyDark">{feed?.description}</Text>
             </Box>
-          </Box>
-          <Box px="sm">
-            <Text>{feed?.description}</Text>
           </Box>
           {feed?.items.map((item, i) => (
             <Box key={item.id}>
