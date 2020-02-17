@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Text} from 'react-native-design-utility';
-import useStatusBar from '../hooks/useStatusBar';
+import useStatusBar from '../../hooks/useStatusBar';
 
 const DownloadsScreen: React.FC = () => {
   useStatusBar('dark-content');

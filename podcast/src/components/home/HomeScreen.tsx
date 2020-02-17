@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Text } from 'react-native-design-utility';
 import { Image, ScrollView, TouchableOpacity } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import TrackPlayer from 'react-native-track-player';
 
 import { theme } from '../../constants/theme';
 import { itunesApiServices } from '../../services/ItunesApiServices';
@@ -9,12 +10,14 @@ import { IPodcast } from '../../types/Podcast';
 import { useNavigation } from '@react-navigation/native';
 import { routes } from '../../navigations/routes';
 import Header from '../commons/Header';
-import useStatusBar from '../hooks/useStatusBar';
+import useStatusBar from '../../hooks/useStatusBar';
+import TrackPlayerServices from '../../services/TrackPlayerServices';
 
 const Divider = () => <Box h={1} w="100%" bg="greyLightest" />;
 
 const PodcastTile: React.FC<{ podcast: IPodcast }> = ({ podcast }) => {
   const { navigate } = useNavigation();
+
   return (
     <TouchableOpacity onPress={() => navigate(routes.PODCAST, { podcast })}>
       <Box dir="row" align="center">
@@ -99,6 +102,29 @@ const HomeScreen: React.FC = () => {
     itunesApiServices.searchPodcast('syntax').then(results => {
       setPodcasts(results);
     });
+  }, []);
+
+  React.useEffect(() => {
+    // Creates the player
+    TrackPlayer.setupPlayer()
+      .then(async () => {
+        console.log('player is setup');
+
+        // // Adds a track to the queue
+        // await TrackPlayer.add({
+        //   id: 'trackId',
+        //   url: 'https://traffic.libsyn.com/secure/syntax/Syntax222.mp3',
+        //   title: 'Track Title',
+        //   artist: 'Track Artist',
+        //   // artwork: require('track.png')
+        // });
+        //
+        // // Starts playing it
+        // TrackPlayer.play();
+      })
+      .catch(e => console.log('error', e));
+
+    TrackPlayer.registerPlaybackService(() => TrackPlayerServices);
   }, []);
 
   return (
