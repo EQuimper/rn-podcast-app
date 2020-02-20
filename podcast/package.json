@@ -28,7 +28,8 @@
     "react-native-screens": "^2.0.0-beta.2",
     "react-native-swift": "^1.2.2",
     "react-native-track-player": "^1.2.2",
-    "react-native-vector-icons": "^6.6.0"
+    "react-native-vector-icons": "^6.6.0",
+    "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -44,6 +45,7 @@
     "@types/react-native-rss-parser": "^1.4.0",
     "@types/react-native-vector-icons": "^6.4.5",
     "@types/react-test-renderer": "16.9.1",
+    "@types/rn-fetch-blob": "^1.2.1",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "babel-jest": "^24.9.0",
