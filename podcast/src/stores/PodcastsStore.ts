@@ -2,7 +2,6 @@ import { Feed } from 'react-native-rss-parser';
 import { observable, runInAction } from 'mobx';
 
 import { IPodcast } from '../types/Podcast';
-import RootStore from './RootStore';
 
 export interface IFeedServices {
   getFeed(feedUrl: string): Promise<Feed>;
@@ -53,13 +52,18 @@ class PodcastsStore {
 
     for (let i = 0; i < podcasts.length; i++) {
       const podcast = podcasts[i];
-      this.podcasts.set(podcast.trackId, podcast);
+
+      runInAction(() => {
+        this.podcasts.set(podcast.trackId, podcast);
+      });
     }
 
-    this.searchs.set(
-      term,
-      podcasts.map(p => p.trackId),
-    );
+    runInAction(() => {
+      this.searchs.set(
+        term,
+        podcasts.map(p => p.trackId),
+      );
+    });
 
     return podcasts;
   }
