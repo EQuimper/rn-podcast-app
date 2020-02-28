@@ -1,6 +1,7 @@
 import { IPodcast } from '../types/Podcast';
+import { ISearchPodcastServices } from '../stores/PodcastsStore';
 
-class ItunesApiServices {
+class ItunesApiServices implements ISearchPodcastServices {
   private baseUrl = 'https://itunes.apple.com/search';
 
   public async searchPodcast(term: string): Promise<IPodcast[]> {

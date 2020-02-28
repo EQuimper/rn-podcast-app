@@ -57,6 +57,7 @@ class DownloadManagerStore {
   private startDownload = (downloadElement: DownloadElement) => {
     RNFetchBlob.config({
       fileCache: true,
+      appendExt: 'mp3',
     })
       .fetch('GET', downloadElement.url)
       .uploadProgress(downloadElement.setProgress)

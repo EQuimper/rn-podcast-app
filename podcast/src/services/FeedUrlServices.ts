@@ -1,6 +1,8 @@
 import * as rssParser from 'react-native-rss-parser';
 
-class FeedUrlServices {
+import { IFeedServices } from 'src/stores/PodcastsStore';
+
+export class FeedUrlServices implements IFeedServices {
   public async getFeed(feedUrl: string) {
     const res = await fetch(feedUrl, { method: 'GET' });
     const resText = await res.text();

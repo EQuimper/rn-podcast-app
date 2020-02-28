@@ -97,15 +97,15 @@ type PodcastScreenRouteProp = RouteProp<
 
 const PodcastScreen: React.FC = () => {
   useStatusBar('dark-content');
-  const { playerStore, downloadManagerStore } = useRootStore();
+  const { playerStore, downloadManagerStore, podcastsStore } = useRootStore();
   const { params } = useRoute<PodcastScreenRouteProp>();
   const [feed, setFeed] = React.useState<Feed | null>(null);
 
   React.useEffect(() => {
-    feedUrlServices.getFeed(params.podcast.feedUrl).then(result => {
+    podcastsStore.fetchFeed(params.podcast).then(result => {
       setFeed(result);
     });
-  }, []);
+  }, [podcastsStore, params.podcast]);
 
   const onDownloadPress = (feedItem: FeedItem) => {
     downloadManagerStore.addToQueue(feedItem.id, feedItem.links[0].url);

@@ -12,6 +12,7 @@ import { routes } from '../../navigations/routes';
 import Header from '../commons/Header';
 import useStatusBar from '../../hooks/useStatusBar';
 import TrackPlayerServices from '../../services/TrackPlayerServices';
+import { useRootStore } from '../../contexts/RootStoreContext';
 
 const Divider = () => <Box h={1} w="100%" bg="greyLightest" />;
 
@@ -95,14 +96,15 @@ const Category: React.FC<{ color: string; icon: string }> = ({
 
 const HomeScreen: React.FC = () => {
   useStatusBar('light-content');
+  const { podcastsStore } = useRootStore();
 
   const [podcasts, setPodcasts] = React.useState<IPodcast[]>([]);
 
   React.useEffect(() => {
-    itunesApiServices.searchPodcast('syntax').then(results => {
+    podcastsStore.searchPodcast('syntax').then(results => {
       setPodcasts(results);
     });
-  }, []);
+  }, [podcastsStore]);
 
   React.useEffect(() => {
     // Creates the player
